@@ -4,6 +4,7 @@ options:
 settings:
   base:
     MACOSX_DEPLOYMENT_TARGET: 14.0
+    SWIFT_ENABLE_EXPLICIT_MODULES: NO
 packages:
   GRDB:
     url: https://github.com/groue/GRDB.swift.git
@@ -19,13 +20,13 @@ packages:
     from: 1.11.2
 targets:
   CarpdmCore:
-    type: framework
+    type: framework.static
     platform: macOS
     deploymentTarget: "14.0"
     sources:
       - Sources/Core
   CarpdmInfrastructure:
-    type: framework
+    type: framework.static
     platform: macOS
     deploymentTarget: "14.0"
     sources:
@@ -39,7 +40,7 @@ targets:
       - package: SwiftTerm
         product: SwiftTerm
   CarpdmFeatures:
-    type: framework
+    type: framework.static
     platform: macOS
     deploymentTarget: "14.0"
     sources:
@@ -47,6 +48,12 @@ targets:
     dependencies:
       - target: CarpdmCore
       - target: CarpdmInfrastructure
+      - package: GRDB
+        product: GRDB
+      - package: Yams
+        product: Yams
+      - package: SwiftTerm
+        product: SwiftTerm
   CarpdmTerminal:
     type: application
     platform: macOS
@@ -58,8 +65,11 @@ targets:
       Release: Config/Release.xcconfig
     dependencies:
       - target: CarpdmCore
+        embed: false
       - target: CarpdmInfrastructure
+        embed: false
       - target: CarpdmFeatures
+        embed: false
       - package: Sparkle
         product: Sparkle
     settings:
