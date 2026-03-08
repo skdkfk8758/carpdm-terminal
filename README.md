@@ -70,6 +70,20 @@ open CarpdmTerminal.xcodeproj
 ./scripts/dev/install_local_app.sh --dest "$HOME/Applications" --no-open
 ```
 
+코드 변경 시 자동 재빌드/재설치를 하고 싶으면:
+
+```bash
+./scripts/dev/watch_local_app.sh
+```
+
+기본 동작은 초기 한 번 빌드/설치 후 `Sources`, `Config`, `project.yml`, `Package.swift`, `Package.resolved` 변경을 감지하면 다시 설치하고 앱을 재실행한다.
+
+재실행 없이 재설치만 하고 싶으면:
+
+```bash
+./scripts/dev/watch_local_app.sh --no-restart
+```
+
 ## ZIP 배포
 
 이 저장소는 `ZIP` 우선 배포를 위한 기본 릴리스 파이프라인을 이미 포함하고 있다.
