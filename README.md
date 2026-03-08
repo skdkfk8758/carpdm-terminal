@@ -56,6 +56,20 @@ xcodegen generate
 open CarpdmTerminal.xcodeproj
 ```
 
+개발용 `.app`을 빌드해서 설치:
+
+```bash
+./scripts/dev/install_local_app.sh
+```
+
+기본 동작은 `/Applications`가 writable이면 거기에 설치하고, 아니면 `~/Applications`에 설치한 뒤 바로 실행한다.
+
+다른 설치 폴더를 쓰고 싶으면:
+
+```bash
+./scripts/dev/install_local_app.sh --dest "$HOME/Applications" --no-open
+```
+
 ## ZIP 배포
 
 이 저장소는 `ZIP` 우선 배포를 위한 기본 릴리스 파이프라인을 이미 포함하고 있다.
