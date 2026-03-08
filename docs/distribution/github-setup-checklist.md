@@ -4,10 +4,10 @@ CarpdmTerminal public repository bootstrap checklist for `https://github.com/skd
 
 ## 1. Repository baseline
 
-- [ ] Repository visibility is `Public`
-- [ ] Default branch is `main`
-- [ ] Local repository remote `origin` points to `https://github.com/skdkfk8758/carpdm-terminal.git`
-- [ ] Initial source tree is pushed from local `main`
+- [x] Repository visibility is `Public`
+- [x] Default branch is `main`
+- [x] Local repository remote `origin` points to `https://github.com/skdkfk8758/carpdm-terminal.git`
+- [x] Initial source tree is pushed from local `main`
 
 ## 2. Release environment
 
