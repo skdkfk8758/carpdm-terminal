@@ -7,7 +7,7 @@ ROOT_DIR="${ROOT_DIR:-$PWD}"
 DERIVED_DATA_PATH="${DERIVED_DATA_PATH:-$ROOT_DIR/build/DerivedData}"
 DIST_DIR="${DIST_DIR:-$ROOT_DIR/dist}"
 UPDATES_DIR="${UPDATES_DIR:-$DIST_DIR/updates}"
-DMG_PATH="${DMG_PATH:-$DIST_DIR/CarpdmTerminal.dmg}"
+ZIP_PATH="${ZIP_PATH:-$DIST_DIR/CarpdmTerminal.zip}"
 SPARKLE_BIN_DIR="${SPARKLE_BIN_DIR:-}"
 
 if [[ -z "$SPARKLE_BIN_DIR" ]]; then
@@ -22,7 +22,7 @@ test -x "$GENERATOR" || {
 }
 
 mkdir -p "$UPDATES_DIR"
-cp "$DMG_PATH" "$UPDATES_DIR/"
+cp "$ZIP_PATH" "$UPDATES_DIR/"
 
 PRIVATE_KEY_PATH="$(mktemp "${RUNNER_TEMP:-/tmp}/sparkle-private-key.XXXXXX")"
 trap 'rm -f "$PRIVATE_KEY_PATH"' EXIT

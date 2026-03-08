@@ -74,7 +74,7 @@ GitHub path: `Actions -> Release`
   - [ ] GitHub Pages
   - [ ] Cloudflare R2 or S3
   - [ ] Other static HTTPS hosting
-- [ ] Publish notarized DMG, ZIP, and `appcast.xml`
+- [ ] Publish notarized ZIP and `appcast.xml`
 - [ ] Keep `SPARKLE_FEED_URL` pointed at the public `appcast.xml`
 - [ ] Verify downloaded archive URL matches `SPARKLE_DOWNLOAD_BASE_URL`
 
@@ -83,7 +83,7 @@ GitHub path: `Actions -> Release`
 - [ ] Merge current code into `main`
 - [ ] Trigger `Release` workflow with a test tag such as `v0.1.0`
 - [ ] Approve `production-release`
-- [ ] Confirm DMG, ZIP, and `appcast.xml` artifacts are produced
+- [ ] Confirm ZIP and `appcast.xml` artifacts are produced
 - [ ] Confirm GitHub Release is created
 - [ ] Sync artifacts to update host
 - [ ] Install the `.app` bundle and verify Sparkle can check for updates

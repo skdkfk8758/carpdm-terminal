@@ -5,15 +5,26 @@ set -euo pipefail
 : "${APPLE_APP_SPECIFIC_PASSWORD:?Missing APPLE_APP_SPECIFIC_PASSWORD}"
 : "${APPLE_NOTARY_TEAM_ID:?Missing APPLE_NOTARY_TEAM_ID}"
 
-DMG_PATH="${DMG_PATH:?Missing DMG_PATH}"
 APP_PATH="${APP_PATH:?Missing APP_PATH}"
+ROOT_DIR="${ROOT_DIR:-$PWD}"
+DIST_DIR="${DIST_DIR:-$ROOT_DIR/dist}"
+ZIP_PATH="${ZIP_PATH:-$DIST_DIR/CarpdmTerminal.zip}"
+NOTARIZATION_ZIP_PATH="$(mktemp "${RUNNER_TEMP:-/tmp}/carpdm-notary.XXXXXX.zip")"
 
-xcrun notarytool submit "$DMG_PATH" \
+trap 'rm -f "$NOTARIZATION_ZIP_PATH"' EXIT
+
+mkdir -p "$DIST_DIR"
+rm -f "$ZIP_PATH"
+
+/usr/bin/ditto -c -k --keepParent "$APP_PATH" "$NOTARIZATION_ZIP_PATH"
+
+xcrun notarytool submit "$NOTARIZATION_ZIP_PATH" \
   --apple-id "$APPLE_ID" \
   --password "$APPLE_APP_SPECIFIC_PASSWORD" \
   --team-id "$APPLE_NOTARY_TEAM_ID" \
   --wait
 
 xcrun stapler staple "$APP_PATH"
-xcrun stapler staple "$DMG_PATH"
+/usr/bin/ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
+echo "ZIP_PATH=$ZIP_PATH" >> "$GITHUB_ENV"

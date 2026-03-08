@@ -72,10 +72,7 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: ./scripts/release/build_archive.sh
 
-      - name: Create DMG
-        run: ./scripts/release/create_dmg.sh
-
-      - name: Notarize and staple
+      - name: Notarize and package ZIP
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
@@ -94,7 +91,6 @@ jobs:
           name: release-artifacts
           retention-days: 7
           path: |
-            dist/CarpdmTerminal.dmg
             dist/CarpdmTerminal.zip
             dist/updates/appcast.xml
 
@@ -105,7 +101,6 @@ jobs:
           TAG="${{ steps.release_meta.outputs.tag }}"
           gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$TAG" --target "$GITHUB_SHA" --generate-notes
           gh release upload "$TAG" \
-            dist/CarpdmTerminal.dmg \
             dist/CarpdmTerminal.zip \
             dist/updates/appcast.xml \
             --clobber

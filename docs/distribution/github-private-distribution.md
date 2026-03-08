@@ -8,7 +8,7 @@ Use a private GitHub repository as the system of record for source code, pull re
 
 - Source code stays in a private GitHub repository.
 - Pull requests, issues, and CI run in the same private repository.
-- GitHub Actions produces signed, notarized DMG and ZIP artifacts.
+- GitHub Actions produces a signed, notarized ZIP artifact plus Sparkle metadata.
 - GitHub Releases can be used for internal testers who already have repository access.
 - Sparkle appcast and downloadable archives should be published to external static hosting for end-user auto-update.
 
@@ -20,7 +20,6 @@ This split matters because private GitHub release assets require authenticated a
 - `.github/workflows/release.yml`
 - `scripts/release/import_certificate.sh`
 - `scripts/release/build_archive.sh`
-- `scripts/release/create_dmg.sh`
 - `scripts/release/notarize.sh`
 - `scripts/release/generate_appcast.sh`
 - `Config/Debug.xcconfig`
@@ -72,9 +71,9 @@ Recommended environment settings:
 2. CI runs `swift test` plus an unsigned Xcode build.
 3. Trigger the `Release` workflow manually with a tag like `v0.1.0`.
 4. Approve the `production-release` environment when GitHub prompts for it.
-5. The workflow imports the Developer ID certificate, archives the app, creates a DMG, notarizes it, staples it, and generates `appcast.xml`.
-6. The workflow uploads DMG, ZIP, and `appcast.xml` to the GitHub Release.
-7. If you want Sparkle auto-update for non-collaborators, publish `dist/updates/appcast.xml` and the release archives to external static hosting.
+5. The workflow imports the Developer ID certificate, archives the app, submits a ZIP for notarization, staples the `.app`, rebuilds the release ZIP, and generates `appcast.xml`.
+6. The workflow uploads ZIP and `appcast.xml` to the GitHub Release.
+7. If you want Sparkle auto-update for non-collaborators, publish `dist/updates/appcast.xml` and the release ZIP to external static hosting.
 
 ## Internal alpha vs general distribution
 
@@ -82,13 +81,13 @@ Recommended environment settings:
 
 - Keep everything in the private GitHub repo.
 - Invite testers as repository collaborators.
-- Let them download DMG assets from GitHub Releases manually.
+- Let them download ZIP assets from GitHub Releases manually.
 
 ### General distribution
 
 - Keep source code private if you want.
 - Continue building in GitHub Actions.
-- Publish the generated DMG, ZIP, and `appcast.xml` to public static hosting.
+- Publish the generated ZIP and `appcast.xml` to public static hosting.
 - Keep Sparkle pointed at that public `appcast.xml`.
 
 ## Notes

@@ -64,8 +64,8 @@ Create `production-release` and configure:
 1. Merge reviewed code into `main`.
 2. Open the `Release` workflow and provide a semver tag like `v0.1.0`.
 3. Approve the `production-release` environment when prompted.
-4. Let GitHub Actions build, sign, notarize, and publish the release artifacts.
-5. Sync the generated `appcast.xml` and archives to the public update host used by Sparkle.
+4. Let GitHub Actions build, sign, notarize, and publish the ZIP release artifacts.
+5. Sync the generated `appcast.xml` and ZIP archive to the public update host used by Sparkle.
 
 ## Residual risks
 

@@ -25,12 +25,8 @@ xcodebuild \
   archive
 
 APP_PATH="$ARCHIVE_PATH/Products/Applications/CarpdmTerminal.app"
-ZIP_PATH="$ROOT_DIR/dist/CarpdmTerminal.zip"
 
 mkdir -p "$ROOT_DIR/dist"
-/usr/bin/ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
 echo "APP_PATH=$APP_PATH" >> "$GITHUB_ENV"
-echo "ZIP_PATH=$ZIP_PATH" >> "$GITHUB_ENV"
 echo "DERIVED_DATA_PATH=$DERIVED_DATA_PATH" >> "$GITHUB_ENV"
-

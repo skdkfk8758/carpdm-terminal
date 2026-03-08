@@ -56,15 +56,15 @@ xcodegen generate
 open CarpdmTerminal.xcodeproj
 ```
 
-## DMG 배포
+## ZIP 배포
 
-이 저장소는 `.dmg` 배포를 위한 기본 릴리스 파이프라인을 이미 포함하고 있다.
+이 저장소는 `ZIP` 우선 배포를 위한 기본 릴리스 파이프라인을 이미 포함하고 있다.
 
 - `.github/workflows/release.yml`: 서명, notarization, GitHub Release 업로드, Sparkle appcast 생성
-- `scripts/release/`: archive, DMG 생성, notarize, appcast 생성 스크립트
+- `scripts/release/`: archive, ZIP notarize, appcast 생성 스크립트
 - `Config/Secrets.example.xcconfig`: 로컬 릴리스 설정 템플릿
 
-배포 가능한 notarized `.dmg`를 만들려면 아래 조건이 필요하다.
+배포 가능한 notarized `.zip`을 만들려면 아래 조건이 필요하다.
 
 - Xcode 라이선스 수락 완료
 - `xcodegen` 설치
@@ -73,7 +73,7 @@ open CarpdmTerminal.xcodeproj
 - Sparkle feed URL 및 키 설정
 - GitHub `production-release` environment secrets 설정
 
-즉, 구조는 이미 준비되어 있고 위 조건만 채우면 GitHub Actions 또는 로컬 Xcode archive 경로로 `.dmg` 배포가 가능하다.
+즉, 구조는 이미 준비되어 있고 위 조건만 채우면 GitHub Actions 기준으로 notarized `.zip`과 `appcast.xml` 배포가 가능하다.
 
 ## GitHub CI / 릴리스
 
