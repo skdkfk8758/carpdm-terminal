@@ -1,0 +1,104 @@
+name: CarpdmTerminal
+options:
+  bundleIdPrefix: com.carpdm
+settings:
+  base:
+    MACOSX_DEPLOYMENT_TARGET: 14.0
+packages:
+  GRDB:
+    url: https://github.com/groue/GRDB.swift.git
+    from: 7.10.0
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle.git
+    from: 2.9.0
+  Yams:
+    url: https://github.com/jpsim/Yams.git
+    from: 6.2.1
+  SwiftTerm:
+    url: https://github.com/migueldeicaza/SwiftTerm.git
+    from: 1.11.2
+targets:
+  CarpdmCore:
+    type: framework
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/Core
+  CarpdmInfrastructure:
+    type: framework
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/Infrastructure
+    dependencies:
+      - target: CarpdmCore
+      - package: GRDB
+        product: GRDB
+      - package: Yams
+        product: Yams
+      - package: SwiftTerm
+        product: SwiftTerm
+  CarpdmFeatures:
+    type: framework
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/Features
+    dependencies:
+      - target: CarpdmCore
+      - target: CarpdmInfrastructure
+  CarpdmTerminal:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Sources/App
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    dependencies:
+      - target: CarpdmCore
+      - target: CarpdmInfrastructure
+      - target: CarpdmFeatures
+      - package: Sparkle
+        product: Sparkle
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.carpdm.CarpdmTerminal
+        INFOPLIST_KEY_CFBundleDisplayName: CarpdmTerminal
+        INFOPLIST_KEY_CFBundleShortVersionString: $(MARKETING_VERSION)
+        INFOPLIST_KEY_CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.developer-tools
+        INFOPLIST_KEY_SUFeedURL: $(SPARKLE_FEED_URL)
+        INFOPLIST_KEY_SUPublicEDKey: $(SPARKLE_PUBLIC_ED_KEY)
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_HARDENED_RUNTIME: YES
+  CarpdmUnitTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Tests/Unit
+    dependencies:
+      - target: CarpdmCore
+      - target: CarpdmInfrastructure
+      - target: CarpdmFeatures
+  CarpdmIntegrationTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Tests/Integration
+    dependencies:
+      - target: CarpdmCore
+      - target: CarpdmInfrastructure
+      - target: CarpdmFeatures
+schemes:
+  CarpdmTerminal:
+    build:
+      targets:
+        CarpdmTerminal: all
+    test:
+      targets:
+        - CarpdmUnitTests
+        - CarpdmIntegrationTests

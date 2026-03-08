@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "codex/**"
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Run Swift package tests
+        run: swift test
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build app target without signing
+        run: |
+          xcodebuild \
+            -project CarpdmTerminal.xcodeproj \
+            -scheme CarpdmTerminal \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+

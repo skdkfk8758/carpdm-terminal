@@ -1,0 +1,6 @@
+#include? "Secrets.xcconfig"
+
+MARKETING_VERSION = 0.1.0
+CURRENT_PROJECT_VERSION = 1
+SPARKLE_FEED_URL = https://updates.example.com/carpdmterminal/appcast.xml
+SPARKLE_PUBLIC_ED_KEY =
